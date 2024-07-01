@@ -17,6 +17,7 @@ import { ChatCompletionMessageParam } from "openai/resources/index";
 const ConversationPage = () => {
   const router = useRouter();
   const[messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,10 +44,9 @@ const ConversationPage = () => {
     }catch(error){
       console.log(error);
     } finally{
-
+      router.refresh();
     }
   };
-
   return (
     <div>
       <Heading
