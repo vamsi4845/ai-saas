@@ -29,8 +29,7 @@ export async function POST(request: Request) {
             messages
         });
 
-        const completion = response.choices[0].message.content;
-        return new NextResponse(JSON.stringify(completion), { status: 200 });
+        return NextResponse.json(response.choices[0].message);
 
     } catch (error) {
         console.log(error);
