@@ -3,7 +3,7 @@
 import * as z from "zod";
 import Heading from "@/components/Heading";
 import axios from "axios";
-import { CodeIcon} from "lucide-react";
+import { Code, CodeIcon} from "lucide-react";
 import { useForm } from "react-hook-form";
 import { formSchema } from "./constants";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,7 +20,7 @@ import { UserAvatar } from "@/components/UserAvatar";
 import { BotAvatar } from "@/components/BotAvatar";
 import ReactMarkdown from "react-markdown";
 
-const ConversationPage = () => {
+const CodePage = () => {
   const router = useRouter();
   const[messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
 
@@ -133,4 +133,4 @@ const ConversationPage = () => {
     </div>
   );
 };
-export default ConversationPage;
+export default CodePage;
