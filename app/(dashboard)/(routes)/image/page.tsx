@@ -160,15 +160,16 @@ const ImagePage = () => {
               <Empty label="No Images Generated" />
             </div>
           )}
-          <div className="gird grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
             {images.map((src) => (
               <Card className="rounded-lg overflow-hidden">
                 <div className="relative aspect-square">
                   <Image alt="Image" fill src={src} />
                 </div>
                 <CardFooter className="p-2">
-                  <Button variant="secondary" className="w-full">
-                    <Download />
+                  <Button onClick={()=>window.open(src)} variant="secondary" className="w-full">
+                    <Download className="h-4 w-4 mr-2" />
+                    Download
                   </Button>
                 </CardFooter>
               </Card>
