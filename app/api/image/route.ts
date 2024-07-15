@@ -1,3 +1,4 @@
+import { checkApiLimit, incrementApiLimit } from '@/lib/api-limit';
 import { amountOptions } from './../../(dashboard)/(routes)/image/constants';
 import { auth } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
@@ -31,12 +32,16 @@ export async function POST(request: Request) {
         if (!resolution) {
             return new NextResponse("Resolution is required", { status: 400 });
         }
-
+        const freeLimit = await checkApiLimit();
+        if(!freeLimit) {
+            return new NextResponse("You have reached the maximum number of free requests. Please upgrade your plan to continue using the service.", { status: 403 });
+        }
         const response = await openai.images.generate({
             prompt,
             n: parseInt(amount,10),
             size: resolution
         })
+        await incrementApiLimit();
 
         return NextResponse.json(response.data);
 
