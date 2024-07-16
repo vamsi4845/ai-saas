@@ -1,3 +1,4 @@
+import { checkApiLimit, incrementApiLimit } from '@/lib/api-limit';
 import { auth } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 import Replicate from 'replicate';
@@ -21,6 +22,10 @@ export async function POST(request: Request) {
             return new NextResponse("Prompt required", { status: 400 });
         }
 
+        const freeLimit = await checkApiLimit();
+        if(!freeLimit) {
+            return new NextResponse("You have reached the maximum number of free requests. Please upgrade your plan to continue using the service.", { status: 403 });
+        }
         const response = await replicate.run(
             "riffusion/riffusion:8cf61ea6c56afd61d8f5b9ffd14d7c216c0a93844ce2d82ac1c9ecc9c7f24e05",
             {
@@ -31,6 +36,7 @@ export async function POST(request: Request) {
         );
 
         return NextResponse.json(response);
+        await incrementApiLimit();
 
     } catch (error) {
         console.log("MUSIC ERROR");
