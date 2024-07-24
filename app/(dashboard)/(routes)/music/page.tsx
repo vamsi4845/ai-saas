@@ -33,8 +33,7 @@ const MusicPage = () => {
     try{
       setMusic("");
       const response = await axios.post("/api/music", values);
-      setMusic(response.data.audio);
-      console.log(response);
+      // setMusic(response.data.audio);
       form.reset();
 
     }catch(error){
